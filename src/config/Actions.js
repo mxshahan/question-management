@@ -1,0 +1,35 @@
+export const APP_LOADED = "APP_LOADED";
+export const APP_UNLOADED = "APP_UNLOADED";
+export const MENU_ENLARGED = 'MENU_ENLARGED';
+
+// Authentications
+export const REQUEST_LOGIN_DATA = 'REQUEST_LOGIN_DATA';
+export const RECIEVED_LOGIN_DATA = 'RECIEVED_LOGIN_DATA';
+export const FAILED_LOGIN_DATA = "FAILED_LOGIN_DATA";
+export const REQUEST_SIGNUP_DATA = 'REQUEST_LOGIN_DATA';
+export const RECIEVED_SIGNUP_DATA = 'RECIEVED_LOGIN_DATA';
+export const SET_USER_DATA = 'SET_USER_DATA';
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const ACTIVATE_ACCOUNT = 'ACTIVATE_ACCOUNT';
+
+// Question
+export const GET_QUESTION = 'GET_QUESTION'
+
+// Roles
+export const GET_ROLES = 'GET_ROLES';
+
+// Groups
+export const GET_GROUPS = 'GET_GROUPS';
+
+
+// Users
+export const REQUEST_CREATE_USER = 'REQUEST_CREATE_USER';
+export const FAILED_CREATE_USER = 'FAILED_CREATE_USER';
+export const GET_ALL_USER = 'GET_ALL_USER';
+export const REQUEST_UPDATE_USER = 'REQUEST_UPDATE_USER';
+export const FAILED_UPDATE_USER = 'FAILED_UPDATE_USER';
+export const DELETE_USER_DATA = 'DELETE_USER_DATA';
+export const GET_PUBLIC_ORG = 'GET_PUBLIC_ORG';
+
+export const CLEAR_FAILED_STATUS = 'CLEAR_FAILED_STATUS';
+

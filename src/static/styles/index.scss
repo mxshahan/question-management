@@ -1,0 +1,29 @@
+@import './base/base';
+@import './components/acticles';
+@import './components/basic';
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.border-box{
+    box-sizing: border-box
+}
+
+#datatable-buttons th:last-child{
+    text-align: right
+}
+
+#datatable-buttons tbody tr td:last-child:not(.child){
+    text-align: center
+}
+.dataTable thead tr th:last-child:not(.child){
+    text-align: center
+}
+.dataTable tfoot tr th:last-child:not(.child){
+    text-align: center
+}
+
+.profile-dropdown{
+    width: auto !important
+}
