@@ -1,0 +1,1 @@
+export { routers as userRouters } from './route';
