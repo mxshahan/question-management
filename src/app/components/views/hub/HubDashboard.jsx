@@ -4,74 +4,8 @@ import Histogram from '../../partials/Chart';
 import { DBCard } from '../../../../core/components/common';
 
 class HubDashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      org: [
-        {
-          label: 'Select',
-        },
-        {
-          label: 'Publisher',
-          value: 1
-        },
-        {
-          label: 'University',
-          value: 2
-        },
-        {
-          label: 'User',
-          value: 3
-        }
-      ],
-      deal: [
-        {
-          label: 'Select Deals',
-        },
-        {
-          label: 'OA Deal',
-          value: 2
-        },
-        {
-          label: 'Non OA Deal',
-          value: 3
-        }
-      ],
-      ins: [
-        {
-          label: 'Select Institute',
-        },
-        {
-          label: 'Publisher',
-          value: 1
-        },
-        {
-          label: 'University',
-          value: 2
-        },
-        {
-          label: 'User',
-          value: 3
-        }
-      ],
-      year: [
-        {
-          label: 'Select Years',
-          value: 1
-        },
-        {
-          label: '2018',
-          value: 2
-        },
-        {
-          label: '2019',
-          value: 3
-        }
-      ],
-    }
-  }
   render() {
-    let card_body = ['£ 950,000.00', '$ 300,000.00 ', '€ 300,500.00'];
+    let card_body = [];
     return (
       <HubContent title="Admin Dashboard">
         <div className="row">
@@ -136,16 +70,16 @@ class HubDashboard extends React.Component {
                   <ul className="">
                     <li className="">
                       University of Oxford
-                                            </li>
+                    </li>
                     <li className="">
                       University of Reading
-                                            </li>
+                    </li>
                     <li className="">
                       Bristol University
-                                            </li>
+                    </li>
                     <li className="">
                       London School of Economics
-                                        </li>
+                    </li>
                   </ul>
                 </div>
               </div>

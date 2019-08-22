@@ -3,8 +3,7 @@ import config, {
 } from '../../../config'
 import { api } from '../../../core/api';
 // import { history } from '../route';
-
-
+import { firebase } from '../../../config';
 
 let url;
 
@@ -49,6 +48,30 @@ export const getGroups = (payload) => ({
   payload
 })
 
+export const WriteInitData = (data) => {
+
+}
+
+// Google Login
+export const GoogleLoginHandler = (payload) => {
+  return dispatch => {
+    let base_provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(base_provider).then(result => {
+      console.log(result);
+      if (result) {
+        let data = {
+          profile: result.additionalUserInfo.profile,
+          token: result.credential.accessToken,
+          refreshToken: result.user.refreshToken
+        }
+        if (result.additionalUserInfo.isNewUser) WriteInitData();
+        dispatch(recievedLoginData(data));
+      }
+    }).catch(error => {
+      console.log('error', error);
+    })
+  }
+}
 
 // Login User
 export const fetchLoginUser = (userData = {}) => {
@@ -89,9 +112,14 @@ export const requestSignUpUser = (userData = {}) => {
 
 // Logout User
 export const logoutUserData = () => {
-  return dispatch => {
-    dispatch(logoutUser());
-    localStorage.clear();
+  return (dispatch) => {
+    return firebase.auth().signOut().then(() => {
+      console.log("Successfully Signout")
+      dispatch(logoutUser()); // Store Clearing
+      localStorage.clear(); // LocalStorage clearing
+    }).catch(e => {
+      console.log(e)
+    })
   }
 }
 

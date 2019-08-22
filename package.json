@@ -45,6 +45,7 @@
     "express-history-api-fallback": "^2.2.1",
     "express-promise-router": "^3.0.3",
     "fast-csv": "^3.4.0",
+    "firebase": "^6.4.0",
     "helmet": "^3.15.1",
     "history": "^4.9.0",
     "jquery": "^3.4.1",
@@ -83,9 +84,6 @@
     "uuid": "^3.3.2",
     "valid-url": "^1.0.9",
     "validator": "^10.11.0"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": [
     ">0.2%",
