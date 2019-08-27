@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
     enum: ['supper', 'admin', 'user'],
     default: 'user'
   },
-  profile_picture: {
+  profileimage: {
     type: String
   }
 });
@@ -77,7 +77,7 @@ userSchema.methods = {
 userSchema.plugin(uniqueValidator);
 userSchema.plugin(timestamp);
 
-const userModel = mongoose.model('userModel', userSchema);
+const userModel = mongoose.model('Admin', userSchema);
 const userCrud = new CRUD(userModel);
 
 export {

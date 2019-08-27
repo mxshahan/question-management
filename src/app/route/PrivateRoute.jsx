@@ -3,18 +3,21 @@ import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { AuthHeader, AuthFooter } from '../components/common';
 
-const PrivateRoute = ({ isAuthenticated, role_id, component: Component, ...rest }) => {
-  return (
-    isAuthenticated ? (
-      <Route {...rest} component={(props) => (
-        <div id="wrapper" className="HubRoute">
-          <AuthHeader />
-          <Component {...props} />
-          <AuthFooter />
-        </div>
-      )} />
-    ) : <Redirect to="/signin" />
-  )
+class PrivateRoute extends React.Component {
+  render() {
+    const { isAuthenticated, role_id, component: Component, ...rest } = this.props;
+    return (
+      isAuthenticated ? (
+        <Route {...rest} component={(props) => (
+          <div id="wrapper" className="HubRoute">
+            <AuthHeader />
+            <Component {...props} />
+            <AuthFooter />
+          </div>
+        )} />
+      ) : <Redirect to="/signin" />
+    )
+  }
 }
 
 const mapStateToProps = (state) => ({

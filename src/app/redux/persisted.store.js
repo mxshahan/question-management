@@ -22,7 +22,8 @@ export const persistedState = (() => {
   try {
     const rawState = localStorage.getItem(StoreKey);
     if (rawState === null) return undefined;
-    const state = JSON.parse(rawState);
+    let state = JSON.parse(rawState);
+    if (state.auth.status === 401) state.auth = {};
     return state;
   } catch (err) {
     return undefined;

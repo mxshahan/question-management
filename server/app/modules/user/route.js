@@ -1,5 +1,5 @@
 import {
-  GetUser, CreateUser, LoginUser, UpdateUser, DeleteUser, CreateAdmin
+  GetUser, CreateUser, LoginUser, UpdateUser, DeleteUser, CreateAdmin, hasUsers, CreateAdminBySuper
 } from './controller';
 import { isAuthenticated } from '../../middlewares';
 import { validateAdmin } from './validate';
@@ -13,6 +13,13 @@ export const routers = {
       route: '/',
       handlers: [
         GetUser
+      ]
+    },
+    {
+      method: 'GET',
+      route: '/has-users',
+      handlers: [
+        hasUsers
       ]
     },
     {
@@ -35,6 +42,15 @@ export const routers = {
       handlers: [
         validateAdmin,
         CreateAdmin
+      ]
+    },
+    {
+      method: 'POST',
+      route: '/create-admin-by-super',
+      handlers: [
+        isAuthenticated,
+        validateAdmin,
+        CreateAdminBySuper
       ]
     },
     {

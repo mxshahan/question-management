@@ -4,10 +4,6 @@ import config, {
 import { api } from '../../../core/api';
 // import { history } from '../route';
 
-
-
-let url;
-
 // Failed Login Action Creator
 export const failedLoginData = (payload) => ({
   type: FAILED_LOGIN_DATA, // eslint-disable-line
@@ -49,6 +45,19 @@ export const getGroups = (payload) => ({
   payload
 })
 
+// Check if there any user or admin available
+export const hasUsers = () => {
+  const url = config.endpoint.has_user
+  return () => {
+    return new Promise((resolve, reject) => {
+      api.get(url).then(res => {
+        resolve(res)
+      }).catch((e) => {
+        reject(e);
+      })
+    })
+  }
+}
 
 // Login User
 export const fetchLoginUser = (userData = {}) => {
@@ -66,7 +75,7 @@ export const fetchLoginUser = (userData = {}) => {
 
 // Sign Up User
 export const requestSignUpUser = (userData = {}) => {
-  const url = config.endpoint.public_registration;
+  const url = config.endpoint.create_admin;
   return dispatch => {
     api.post(url, userData).then((res) => {
       dispatch(recievedSignupData(
@@ -95,68 +104,3 @@ export const logoutUserData = () => {
   }
 }
 
-// Logout User
-
-
-export const ChangePassword = (payload, token) => {
-  return () => {
-    url = config.endpoint.change_pwd;
-    return new Promise((resolve, reject) => {
-      api.post(url, payload, token).then((res) => {
-        console.log(res)
-        resolve(res)
-      }, error => {
-        reject(error)
-      }).catch((error) => {
-        reject(error)
-      })
-    })
-  }
-}
-
-
-
-// Get Group List
-export const getGroupList = () => {
-  return (dispatch, getState) => {
-    const token = getState().auth.token;
-    return new Promise((resolve, reject) => {
-      api.getGroupHandler(token).then((res) => {
-        // console.log(res.results)
-        dispatch(getGroups(res.results))
-        resolve(res);
-      }).catch(e => {
-        reject(e)
-      })
-    })
-  }
-}
-
-// Activate Account 
-export const activateAccount = (payload) => {
-  return () => {
-    return new Promise((resolve, reject) => {
-      api.activateHandler(payload).then((res) => {
-        resolve(res.data)
-      }, e => {
-        resolve(e)
-      }).catch((e) => {
-        resolve(e)
-      })
-    })
-  }
-}
-
-export const validateToken = () => {
-  return (dispatch, getState) => {
-    const token = getState().auth.token;
-    return new Promise((resolve, reject) => {
-      api.validateTokenHandler(token).then(res => {
-        resolve(res)
-      }, error => {
-        dispatch(logoutUser()); // Store Clearing
-        localStorage.clear(); // LocalStorage clearing
-      })
-    })
-  }
-}

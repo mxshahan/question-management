@@ -1,4 +1,4 @@
-import { SignIn } from "../components/views/auth";
+import { SignIn, SignUp } from "../components/views/auth";
 import { Dashboard, Basic, Deep, AddQuestion, BulkUpload } from "../components/views";
 import EditQuestion from "../components/views/hub/questionManagement/EditQuestion";
 
@@ -26,6 +26,7 @@ import EditQuestion from "../components/views/hub/questionManagement/EditQuestio
 // Login or Sign in Routes
 export const Auth = [
   { path: '/signin', exact: true, component: SignIn },
+  { path: '/create-admin', exact: true, component: SignUp }
   // { path: '/signup', exact: true, component: SignUp },
 ]
 
@@ -41,5 +42,5 @@ export const Private = [
   { path: '/ques/deep', exact: true, component: Deep },
   { path: '/ques/add-question', exact: true, component: AddQuestion },
   { path: '/ques/bulk-upload', exact: true, component: BulkUpload },
-  { path: '/ques/edit-question/:id', exact: true, component: EditQuestion, name: "Edit Question" }
+  { path: '/ques/edit-question/:id', exact: true, component: EditQuestion, name: "Edit Question" },
 ]

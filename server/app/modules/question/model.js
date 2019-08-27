@@ -48,7 +48,7 @@ const questionSchema = new mongoose.Schema({
 questionSchema.plugin(uniqueValidator);
 questionSchema.plugin(timestamp);
 
-const questionModel = mongoose.model('questionModel', questionSchema);
+const questionModel = mongoose.model('Question', questionSchema);
 const questionCrud = new CRUD(questionModel);
 
 export {

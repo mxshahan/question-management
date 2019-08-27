@@ -13,12 +13,24 @@ import {
   Private
 } from './Router';
 import { NotFound } from '../components/views';
+import { hasUsers } from '../redux';
 
 const createHistory = require("history").createBrowserHistory
 
 export const history = createHistory();
 
 class AppRouter extends React.Component {
+  async componentDidMount() {
+    try {
+      const result = await this.props.hasUsers();
+      if (result.count === 0) {
+        history.push('/create-admin')
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -68,8 +80,14 @@ class AppRouter extends React.Component {
 }
 
 
+
 const mapStateToProps = (state) => ({
+  isAuthenticated: !!state.auth.token,
+})
+
+const mapDispatchToProps = dispatch => ({
+  hasUsers: () => dispatch(hasUsers())
 })
 
 
-export default connect(mapStateToProps)(AppRouter)
+export default connect(mapStateToProps, mapDispatchToProps)(AppRouter)

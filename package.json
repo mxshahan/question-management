@@ -2,6 +2,7 @@
   "name": "oametrix-client-react",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3005/",
   "scripts": {
     "start": "cross-env NODE_ENV=production node bin/prod.js",
     "dev": "cross-env NODE_ENV=development nodemon bin/dev.js",

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchLoginUser } from '../../../redux';
+import { Loading } from '../../../../core/components';
 
 class SignIn extends React.Component {
   state = {
@@ -12,8 +13,10 @@ class SignIn extends React.Component {
     const { username, password } = this.state;
 
     if (username && password) {
+      this.setState({ loading: true });
       let data = { username, password }
       await this.props.fetchLoginUser(data);
+      this.setState({ loading: false });
     } else {
       alert('Username or Password cannot be empty')
     }
@@ -23,6 +26,7 @@ class SignIn extends React.Component {
 
     return (
       <div className="wrapper-page pt-5">
+        {this.state.loading && <Loading />}
         <div className="card">
           <div className="card-body">
             <h3 className="text-center m-0">
