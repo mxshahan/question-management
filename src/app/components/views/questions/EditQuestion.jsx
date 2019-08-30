@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { HubContent } from '../../../../../core/components/hub/HubContent';
-import { InputBox, SelectBox } from '../../../../../core/components';
-import { getSingleQuestion, UpdateQuestion } from '../../../../redux';
+import HubContent, { InputBox, SelectBox } from '../../../../core/components';
+import { getSingleQuestion, UpdateQuestion } from '../../../redux';
 
 class EditQuestion extends React.Component {
   state = {

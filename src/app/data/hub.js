@@ -1,53 +1,11 @@
-import { Dashboard } from "../components/views";
+import { Dashboard, Basic, Deep, AddQuestion, BulkUpload, EditQuestion } from "../components/views";
 
 export const HubRoot = {
   dashboard: "/",
   organizations: "/organizations",
-  users: "/user",
-  ques: "/ques",
-  articles: "/articles",
-  journals: "/journals",
-  article_approval: '/article-approval',
-  article_decline: '/article-decline',
-  role: '/role',
-  orcid_id: '/orcid-id',
-  oaDeal: '/oa-deal'
+  users: "/users",
+  ques: "/question",
 }
-
-// All endpoints
-
-// export const HubSidebar = [
-//   {
-//     icon: 'mdi-view-dashboard',
-//     label: 'Dashboard',
-//     to: HubRoot.dashboard,
-//     exact: true,
-//     component: Dashboard
-//   },
-//   {
-//     icon: 'mdi-account-multiple',
-//     label: 'Users',
-//     to: HubRoot.users,
-//     content: [
-//       {
-//         label: 'Add User',
-//         to: '/add-user',
-//         // component: AddUser,
-//       },
-//       {
-//         label: 'User List',
-//         to: '/user-list',
-//         // component: UserList,
-//       },
-//       {
-//         label: 'View User',
-//         to: '/:id',
-//         // component: ViewUser,
-//         isHide: true,
-//       },
-//     ],
-//   },
-// ]
 
 export const HubSidebar = [
   {
@@ -58,30 +16,54 @@ export const HubSidebar = [
     component: Dashboard
   },
   {
+
+    icon: 'mdi-account-multiple',
+    label: 'Users Management',
+    to: HubRoot.users,
+    content: [
+      {
+        label: 'Active Users',
+        to: '/active-users',
+      },
+      {
+        label: 'Blocked Users',
+        to: '/blocked-users',
+      },
+      {
+        label: 'Deactivated Users',
+        to: '/deactivated-users',
+      },
+    ]
+  },
+  {
     icon: 'mdi-help-circle',
     label: 'Question Management',
     to: HubRoot.ques,
     content: [
       {
-        icon: 'circle-outline',
         label: 'Basic',
         to: '/basic',
+        component: Basic
       },
       {
         label: 'Deep',
         to: '/deep',
+        component: Deep
       },
       {
         label: 'Add Question',
         to: '/add-question',
+        component: AddQuestion
       },
       {
         label: 'Bulk Upload',
         to: '/bulk-upload',
+        component: BulkUpload
       },
       {
         label: 'Edit',
-        to: '/edit-question',
+        to: '/edit-question/:id',
+        component: EditQuestion,
         isHide: true
       },
     ],

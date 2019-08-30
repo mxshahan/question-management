@@ -1,9 +1,8 @@
 import React from 'react';
-import { HubContent } from '../../../../../core/components/hub/HubContent';
-import { Loading } from '../../../../../core/components/common'
+import HubContent, { Loading } from '../../../../core/components';
 import Dropzone from "react-dropzone";
 import { connect } from 'react-redux';
-import { uploadFile } from '../../../../redux';
+import { uploadFile } from '../../../redux';
 
 class BulkUpload extends React.Component {
   state = {

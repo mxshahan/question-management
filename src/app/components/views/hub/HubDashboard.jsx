@@ -1,5 +1,5 @@
 import React from 'react';
-import { HubContent } from '../../../../core/components';
+import HubContent from '../../../../core/components';
 import Histogram from '../../partials/Chart';
 import { DBCard } from '../../../../core/components/common';
 
@@ -136,16 +136,16 @@ class HubDashboard extends React.Component {
                   <ul className="">
                     <li className="">
                       University of Oxford
-                                            </li>
+                    </li>
                     <li className="">
                       University of Reading
-                                            </li>
+                    </li>
                     <li className="">
                       Bristol University
-                                            </li>
+                    </li>
                     <li className="">
                       London School of Economics
-                                        </li>
+                    </li>
                   </ul>
                 </div>
               </div>

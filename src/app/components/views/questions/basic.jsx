@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { HubContent } from '../../../../../core/components/hub/HubContent';
-import { SelectBox, Loading } from '../../../../../core/components/common';
-import { FetchQuestion, UpdateStatus, DeleteQuestion, DeleteMultiple } from '../../../../redux';
-import { serialize } from '../../../../../core/lib/serializer';
+import HubContent, { SelectBox, Loading } from '../../../../core/components';
+import { FetchQuestion, UpdateStatus, DeleteQuestion, DeleteMultiple } from '../../../redux';
+import { serialize } from '../../../../core/lib/serializer';
 import { Table, Tag, Divider } from 'antd';
 import { formatStatus } from './questionFn';
 
-const category = 'deep';
+const category = 'basic';
 
-class Deep extends React.Component {
+class Basic extends React.Component {
   state = {
     results: null,
     filterParams: { category: category },
@@ -49,7 +48,7 @@ class Deep extends React.Component {
   }
 
   onEdit = (data) => {
-    this.props.history.push('/ques/edit-question/' + data._id, data)
+    this.props.history.push('/question/edit-question/' + data._id, data)
   }
 
 
@@ -260,4 +259,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Deep);
+export default connect(mapStateToProps, mapDispatchToProps)(Basic);

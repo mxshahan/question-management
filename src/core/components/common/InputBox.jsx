@@ -94,7 +94,7 @@ class Input extends React.Component {
 
   render() {
     return this.props.isPublic ? (
-      <>
+      <React.Fragment>
         {this.props.label && (
           <label
             htmlFor={this.props.field || ''}
@@ -162,9 +162,9 @@ class Input extends React.Component {
             minLength={this.props.minLength || ''}
           />
         </div>
-      </>
+      </React.Fragment>
     ) : (
-        <>
+        <React.Fragment>
           {this.props.label && (
             <label
               htmlFor={this.props.field || ''}
@@ -241,7 +241,7 @@ class Input extends React.Component {
               minLength={this.props.minLength || ''}
             />
           </div>
-        </>
+        </React.Fragment>
       )
   }
 }
