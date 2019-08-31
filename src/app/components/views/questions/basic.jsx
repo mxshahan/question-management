@@ -32,6 +32,8 @@ class Basic extends React.Component {
       this.setState({
         error: e
       })
+    } finally {
+      this.setState({ loading: false })
     }
   }
 
@@ -67,6 +69,7 @@ class Basic extends React.Component {
   }
 
   onChangeFiltering = async (value) => {
+    this.setState({ loading: true })
     await this.setState((prevState) => {
       Object.assign(prevState.filterParams, value)
     })
@@ -189,7 +192,7 @@ class Basic extends React.Component {
 
     return (
       <HubContent className="no-pd">
-        {this.state.loading && <Loading />}
+        {/* {this.state.loading && <Loading />} */}
         <div className="row d-flex align-items-center  mb-2">
           <SelectBox
             className="col-md-3 "
@@ -235,6 +238,8 @@ class Basic extends React.Component {
                   rowSelection={rowSelection}
                   onChange={this.handleChange}
                   pagination={{ pageSize: this.state.pageSize }}
+                  loading={this.state.loading}
+
                 />
                 : <Loading type="flat" />
               }

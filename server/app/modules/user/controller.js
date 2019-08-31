@@ -4,7 +4,7 @@ let user,
   users;
 
 
-export const GetUser = async (req, res) => {
+export const GetUsers = async (req, res) => {
   try {
     users = await userCrud.get();
   } catch (error) {
@@ -14,51 +14,13 @@ export const GetUser = async (req, res) => {
   }
 };
 
-export const hasUsers = async (req, res) => {
-  try {
-    users = await userCrud.get();
-  } catch (error) {
-    res.status(422).json(error);
-  } finally {
-    res.status(200).json({
-      count: users.length
-    });
-  }
-};
-
-export const LoginUser = async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    user = await userCrud.single({
-      qr: {
-        $or: [{
-          'email': username
-        }, {
-          'username': username
-        }]
-      }
-    });
-  } catch (error) {
-    res.status(422).json(error);
-  } finally {
-    if (user && user.isMatchedPassword(password)) {
-      res.status(200).json(user.toAuthJSON());
-    } else {
-      res.status(401).json({
-        success: false,
-        message: 'Unauthorized'
-      });
-    }
-  }
-};
-
 export const CreateUser = async (req, res) => {
   try {
     user = await userCrud.create(req.body);
   } catch (e) {
     res.status(422).json(e);
   } finally {
-    res.status(201).json(user.toAuthJSON());
+    res.status(201).json(user);
   }
 };
 
@@ -102,14 +64,17 @@ export const UpdateUser = async (req, res) => {
   try {
     user = await userCrud.put({
       params: {
-        qr: { _id: req.user.uid }
+        qr: { _id: req.params.id }
       },
       body: req.body
     });
+    return res.status(201).json(user);
   } catch (e) {
-    res.status(422).json(e);
-  } finally {
-    res.status(201).json(user.toAuthJSON());
+    return res.status(422).json({
+      message: 'User doesn\'t exists',
+      success: false,
+      error: e
+    });
   }
 };
 
@@ -117,15 +82,18 @@ export const DeleteUser = async (req, res) => {
   try {
     user = await userCrud.delete({
       params: {
-        qr: { _id: req.user.uid }
+        qr: { _id: req.params.id }
       }
     });
-  } catch (e) {
-    res.status(422).json(e);
-  } finally {
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: 'User Deleted'
+    });
+  } catch (e) {
+    return res.status(422).json({
+      message: 'User doesn\'t exists',
+      success: false,
+      error: e
     });
   }
 };

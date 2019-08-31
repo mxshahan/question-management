@@ -1,7 +1,9 @@
+import { adminRouters } from './admin';
+import { questRouters } from './question';
 import { userRouters } from './user';
-import { questRouters } from './question'
 
 export const routerHandlers = [
-    userRouters,
-    questRouters
-]
+  adminRouters,
+  questRouters,
+  userRouters
+];

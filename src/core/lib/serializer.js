@@ -1,3 +1,4 @@
+import moment from "moment";
 
 export const serialize = (obj) => {
   let str = [];
@@ -7,4 +8,8 @@ export const serialize = (obj) => {
       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
     }
   return str.join("&");
+}
+
+export const formatDate = (date = '') => {
+  return moment(date).format('LL');
 }

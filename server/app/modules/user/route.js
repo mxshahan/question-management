@@ -1,9 +1,7 @@
 import {
-  GetUser, CreateUser, LoginUser, UpdateUser, DeleteUser, CreateAdmin, hasUsers, CreateAdminBySuper
+  CreateUser, GetUsers, DeleteUser, UpdateUser
 } from './controller';
-import { isAuthenticated } from '../../middlewares';
-import { validateAdmin } from './validate';
-// import { isAuthenticated } from '@mid'
+import { isAuthenticated } from '@mid';
 
 export const routers = {
   baseUrl: '/api/user',
@@ -12,62 +10,32 @@ export const routers = {
       method: 'GET',
       route: '/',
       handlers: [
-        GetUser
-      ]
-    },
-    {
-      method: 'GET',
-      route: '/has-users',
-      handlers: [
-        hasUsers
+        GetUsers
       ]
     },
     {
       method: 'POST',
-      route: '/login',
+      route: '/create-user',
       handlers: [
-        LoginUser
-      ]
-    },
-    {
-      method: 'POST',
-      route: '/register',
-      handlers: [
+        isAuthenticated,
         CreateUser
       ]
     },
     {
-      method: 'POST',
-      route: '/create-admin',
-      handlers: [
-        validateAdmin,
-        CreateAdmin
-      ]
-    },
-    {
-      method: 'POST',
-      route: '/create-admin-by-super',
+      method: 'DELETE',
+      route: '/:id',
       handlers: [
         isAuthenticated,
-        validateAdmin,
-        CreateAdminBySuper
+        DeleteUser
       ]
     },
     {
       method: 'PUT',
-      route: '/',
+      route: '/:id',
       handlers: [
         isAuthenticated,
         UpdateUser
       ]
     },
-    {
-      method: 'DELETE',
-      route: '/',
-      handlers: [
-        isAuthenticated,
-        DeleteUser
-      ]
-    }
   ]
 };

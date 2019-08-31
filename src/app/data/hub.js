@@ -1,4 +1,12 @@
-import { Dashboard, Basic, Deep, AddQuestion, BulkUpload, EditQuestion } from "../components/views";
+import {
+  Dashboard,
+  Basic,
+  Deep,
+  AddQuestion,
+  BulkUpload,
+  EditQuestion,
+  UsersActive
+} from "../components/views";
 
 export const HubRoot = {
   dashboard: "/",
@@ -24,6 +32,7 @@ export const HubSidebar = [
       {
         label: 'Active Users',
         to: '/active-users',
+        component: UsersActive
       },
       {
         label: 'Blocked Users',
