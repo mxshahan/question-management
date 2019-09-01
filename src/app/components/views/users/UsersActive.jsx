@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import HubContent from '../../../../core/components';
-import UsersTable from './UsersTable';
+import UserManagement from './UserManagement';
 
 class UserActive extends React.Component {
   render() {
     return (
-      <HubContent>
-        <UsersTable />
-      </HubContent>
+      <UserManagement
+        type="active"
+        title="Active Users"
+      />
     )
   }
 }

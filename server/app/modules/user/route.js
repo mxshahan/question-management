@@ -1,5 +1,5 @@
 import {
-  CreateUser, GetUsers, DeleteUser, UpdateUser
+  CreateUser, GetUsers, DeleteUser, UpdateUser, DeleteMultipe
 } from './controller';
 import { isAuthenticated } from '@mid';
 
@@ -19,6 +19,14 @@ export const routers = {
       handlers: [
         isAuthenticated,
         CreateUser
+      ]
+    },
+    {
+      method: 'POST',
+      route: '/delete-multiple',
+      handlers: [
+        isAuthenticated,
+        DeleteMultipe
       ]
     },
     {

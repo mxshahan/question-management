@@ -7,6 +7,8 @@ import {
   EditQuestion,
   UsersActive
 } from "../components/views";
+import UsersBlocked from "../components/views/users/UsersBlocked";
+import UsersDeactivated from "../components/views/users/UsersDeactivated";
 
 export const HubRoot = {
   dashboard: "/",
@@ -37,10 +39,12 @@ export const HubSidebar = [
       {
         label: 'Blocked Users',
         to: '/blocked-users',
+        component: UsersBlocked
       },
       {
         label: 'Deactivated Users',
         to: '/deactivated-users',
+        component: UsersDeactivated
       },
     ]
   },

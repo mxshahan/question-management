@@ -239,6 +239,7 @@ class Basic extends React.Component {
                   onChange={this.handleChange}
                   pagination={{ pageSize: this.state.pageSize }}
                   loading={this.state.loading}
+                  scroll={{ x: 1000 }}
 
                 />
                 : <Loading type="flat" />

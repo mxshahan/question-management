@@ -1,12 +1,13 @@
-import { userCrud } from './model';
+import { userCrud, userModel } from './model';
 // import { generateJwt } from '@util'
 let user,
   users;
 
 
 export const GetUsers = async (req, res) => {
+  const { query } = req;
   try {
-    users = await userCrud.get();
+    users = await userModel.find(query);
   } catch (error) {
     res.status(422).json(error);
   } finally {
@@ -24,41 +25,6 @@ export const CreateUser = async (req, res) => {
   }
 };
 
-export const CreateAdmin = async (req, res, next) => {
-  try {
-    users = await userCrud.get();
-    if (users.length === 0) {
-      user = await userCrud.create(req.body);
-    } else {
-      return res.status(422).json({
-        success: false,
-        message: 'Admin cannot be created. Already admin available. If you are authority please clear your database or change password'
-      });
-    }
-  } catch (e) {
-    next(e);
-  } finally {
-    res.status(201).json(user.toAuthJSON());
-  }
-};
-
-export const CreateAdminBySuper = async (req, res, next) => {
-  let superAdmin = req.user.uid;
-  try {
-    if (superAdmin) {
-      user = await userCrud.create(req.body);
-    } else {
-      return res.status(422).json({
-        success: false,
-        message: 'Only super admin can create admin account'
-      });
-    }
-  } catch (e) {
-    next(e);
-  } finally {
-    res.status(201).json(user.toAuthJSON());
-  }
-};
 
 export const UpdateUser = async (req, res) => {
   try {
@@ -97,3 +63,21 @@ export const DeleteUser = async (req, res) => {
     });
   }
 };
+
+export const DeleteMultipe = async (req, res) => {
+  // console.log(req.body)
+  try {
+    if (Array.isArray(req.body)) {
+      for (let entry of req.body) {
+        await userModel.deleteOne({ _id: entry });
+      }
+    }
+    // await userModel.remove({ _id: { $in: [req.body] } });
+    res.status(201).json({
+      message: 'Selected items deleted',
+      success: true,
+    });
+  } catch (e) {
+    res.status(422).json(e);
+  }
+}

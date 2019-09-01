@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
-import '../../../static/styles/index.scss'
 
 export class Header extends React.Component {
   render() {

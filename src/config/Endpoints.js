@@ -11,6 +11,8 @@ export const config = {
     question: 'api/question',
     update_status: 'api/question/update-status',
     upload_file: 'api/question/upload-file',
-    has_user: 'api/admin/has-users'
+    has_user: 'api/admin/has-users',
+    get_users: 'api/user',
+    delete_multiple: 'api/user/delete-multiple'
   },
 }

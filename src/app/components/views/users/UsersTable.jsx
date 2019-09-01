@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Card } from 'react-bootstrap';
-import { Table } from 'antd';
+import { Table, Divider, Select, Icon } from 'antd';
+import { SelectBox } from '../../../../core/components';
+import moment from 'moment';
 
+const { Option } = Select;
 
 
 class UserTable extends React.Component {
@@ -31,14 +34,12 @@ class UserTable extends React.Component {
     results: null,
     selectedRowKeys: [],
     selectedItems: [],
-    loading: false,
     sortedInfo: null,
     pageSize: 100
   }
 
 
   handleChange = (pagination, filters, sorter) => {
-    console.log('Various parameters', sorter);
     this.setState({
       sortedInfo: sorter,
     });
@@ -48,69 +49,42 @@ class UserTable extends React.Component {
     this.setState({
       selectedRowKeys
     });
+    this.props.selectedRowKeys && this.props.selectedRowKeys(selectedRowKeys)
+  }
+
+  formatImage = (record) => {
+    return record.images
+      ? record.images
+      : (
+        record.gender.toLowerCase() === 'male'
+          ? "/assets/images/male.png"
+          : "/assets/images/female.png"
+      )
   }
 
   render() {
-    const data = [
-      {
-        id: 1,
-        name: 'Test Project',
-        text: 'a',
-        gender: 'Male',
-        image: 'https://images.unsplash.com/photo-1497316730643-415fac54a2af?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80',
-        updated_by: {
-          id: 1,
-          first_name: 'Shahan',
-          last_name: 'Chowdhury'
-        }
-      },
-      {
-        id: 1,
-        name: 'Test Project',
-        text: 'e',
-        gender: 'Male',
-        image: 'https://images.unsplash.com/photo-1497316730643-415fac54a2af?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80',
-        updated_by: {
-          id: 1,
-          first_name: 'Shahan',
-          last_name: 'Chowdhury'
-        }
-      },
-      {
-        id: 1,
-        name: 'Test Project 3',
-        text: 'd',
-        gender: 'Male',
-        image: 'https://images.unsplash.com/photo-1497316730643-415fac54a2af?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80',
-        updated_by: {
-          id: 1,
-          first_name: 'Shahan',
-          last_name: 'Chowdhury'
-        }
-      },
-      {
-        id: 1,
-        name: 'Urban Project',
-        text: 'c',
-        gender: 'Male',
-        image: 'https://images.unsplash.com/photo-1497316730643-415fac54a2af?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80',
-        updated_by: {
-          id: 1,
-          first_name: 'Shahan',
-          last_name: 'Chowdhury'
-        }
-      }
-    ]
-
     let sortedInfo = this.state.sortedInfo || {};
     let columns = [
       {
         title: 'Image',
         dataIndex: 'image',
         key: 'image',
-        render: imgUrl => (
-          <span className=" ">
-            <img src={imgUrl} alt="Alternative" className="img-thumbnail rounded-circle img-fluid" width="40px" />
+        className: 'text-center',
+        render: (text, record) => (
+          <span>
+            <img
+              src={this.formatImage(record)}
+              alt="Alternative"
+              className="img-thumbnail rounded-circle img-fluid"
+              style={{ width: 40, height: 40 }}
+              onError={(e) => {
+                if (record.gender.toLowerCase() === 'male') {
+                  return e.target.src = "/assets/images/male.png"
+                } else {
+                  return e.target.src = "/assets/images/female.png"
+                }
+              }}
+            />
           </span>
         ),
       },
@@ -118,43 +92,87 @@ class UserTable extends React.Component {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        sorter: (a, b) => a.name.localeCompare(b.name),
+        sorter: (a, b) => a.name && a.name.localeCompare(b.name),
         sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
       },
       {
         title: 'Gender',
         dataIndex: 'gender',
         key: 'gender',
-        sorter: (a, b) => a.gender.localeCompare(b.text),
+        sorter: (a, b) => a.gender && a.gender.localeCompare(b.gender),
         sortOrder: sortedInfo.columnKey === 'gender' && sortedInfo.order,
       },
       {
         title: 'Country',
         dataIndex: 'country',
         key: 'country',
-        sorter: (a, b) => a.country.localeCompare(b.country),
+        sorter: (a, b) => a.country && a.country.localeCompare(b.country),
         sortOrder: sortedInfo.columnKey === 'country' && sortedInfo.order,
       },
       {
         title: 'Phone',
         dataIndex: 'phone',
         key: 'phone',
-        sorter: (a, b) => a.phone.localeCompare(b.phone),
+        sorter: (a, b) => a.phone && a.phone.localeCompare(b.phone),
         sortOrder: sortedInfo.columnKey === 'phone' && sortedInfo.order,
       },
       {
         title: 'Seeking',
         dataIndex: 'seeking',
         key: 'seeking',
-        sorter: (a, b) => a.seeking.localeCompare(b.seeking),
+        sorter: (a, b) => a.seeking && a.seeking.localeCompare(b.seeking),
         sortOrder: sortedInfo.columnKey === 'seeking' && sortedInfo.order,
       },
       {
         title: 'Signup Date',
-        dataIndex: 'signup_date',
-        key: 'signup_date',
-        sorter: (a, b) => a.signup_date.localeCompare(b.signup_date),
-        sortOrder: sortedInfo.columnKey === 'signup_date' && sortedInfo.order,
+        dataIndex: 'createdAt',
+        key: 'createdAt',
+        sorter: (a, b) => a.createdAt && a.createdAt.localeCompare(b.createdAt),
+        sortOrder: sortedInfo.columnKey === 'createdAt' && sortedInfo.order,
+        render: (text, record) => {
+          return moment(record.createdAt).format('ll')
+        }
+      },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        key: 'status',
+        sorter: (a, b) => a.status && a.status.localeCompare(b.status),
+        sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
+        render: (text, record) => (
+          <span>
+            <Select defaultValue={record.status} onChange={(value) => this.props.statusUpdate && this.props.statusUpdate(value, record)}>
+              <Option value="active">Active</Option>
+              <Option value="blocked">Block</Option>
+              <Option value="deactivated">Deactive</Option>
+            </Select>
+          </span>
+        )
+      },
+      {
+        title: 'Action',
+        dataIndex: 'action',
+        key: 'action',
+        width: '10%',
+        render: (text, record) => (
+          <span className="d-flex align-items-center" id="action-btn">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <span className="text-default cursor-pointer" onClick={() => this.props.onView && this.props.onView(record)} >
+              <Icon type="fullscreen" title="View" />
+            </span>
+            <Divider type="vertical" />
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <span onClick={() => this.props.onEdit && this.props.onEdit(record._id)} className="text-warning cursor-pointer">
+              <Icon type="edit" title="Edit" />
+            </span>
+            <Divider type="vertical" />
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <span onClick={() => this.props.onDelete && this.props.onDelete(record._id)} className="text-danger cursor-pointer">
+              <Icon type="delete" title="Delete" />
+            </span>
+
+          </span>
+        )
       },
     ]
 
@@ -166,19 +184,67 @@ class UserTable extends React.Component {
     };
 
 
+    const rows = [
+      { name: '10', id: 10 },
+      { name: '25', id: 25 },
+      { name: '50', id: 50 },
+      { name: '100', id: 100 },
+    ]
+
+    const genders = [
+      { name: 'all', id: 'all' },
+      { name: 'male', id: 'male' },
+      { name: 'female', id: 'female' },
+    ]
+
     return (
-      <div className="row">
-        <div className="col-12">
-          <Card>
-            <Table
-              dataSource={data}
-              columns={columns}
-              onChange={this.handleChange}
-              rowSelection={rowSelection}
-            />
-          </Card>
+      <React.Fragment>
+        <div className="row d-flex align-items-center  mb-2">
+          <SelectBox
+            className="col-md-2"
+            data={rows}
+            onChange={({ rows }) => this.setState({ pageSize: rows })}
+            field="rows"
+            defaultValue={this.state.pageSize}
+            label="Shows"
+            labelClass="col-sm-1"
+          />
+          <SelectBox
+            className="col-md-2"
+            data={genders}
+            onChange={this.props.onFiltering && this.props.onFiltering}
+            field="gender"
+            defaultValue={this.props.filterParams && this.props.filterParams.gender}
+            label="Gender"
+            labelClass="col-sm-1"
+          />
+
+          <div className="col-md-2">
+            {selectedRowKeys.length > 0 &&
+              <button
+                className="btn btn-danger btn-md waves-effect waves-light w-100"
+                onClick={() => this.props.deleteMultiple && this.props.deleteMultiple(this.state.selectedRowKeys)}
+              >Delete</button>
+            }
+          </div>
         </div>
-      </div>
+        <div className="row" id="user-table">
+          <div className="col-12">
+            <Card>
+              <Table
+                dataSource={this.props.data}
+                columns={columns}
+                onChange={this.handleChange}
+                rowSelection={rowSelection}
+                pagination={{ pageSize: this.state.pageSize }}
+                loading={this.props.loading}
+                rowKey="_id"
+                scroll={{ x: 1000 }}
+              />
+            </Card>
+          </div>
+        </div>
+      </React.Fragment>
     )
   }
 }

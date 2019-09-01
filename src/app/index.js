@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { AppSettings } from '../base';
 import { AppRouter } from './route';
 import store from './redux';
+import '../static/styles/index.scss'
 
 class App extends AppSettings {
   render() {

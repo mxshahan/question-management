@@ -27,3 +27,22 @@
 .profile-dropdown{
     width: auto !important
 }
+
+#user-table thead{
+    border-bottom: 1px solid #333 !important;
+}
+
+
+
+#user-table{
+    #action-btn {
+        * {
+            line-height: 0px;
+        }
+    }
+    th{
+        // border: 0px none !important;
+        border-color: #eee
+    }
+}
+
