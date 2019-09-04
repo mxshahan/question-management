@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Card } from 'react-bootstrap';
 import { Table, Divider, Select, Icon } from 'antd';
-import { SelectBox } from '../../../../core/components';
+import { SelectBox, InputBox } from '../../../../core/components';
 import moment from 'moment';
 
 const { Option } = Select;
@@ -103,18 +103,11 @@ class UserTable extends React.Component {
         sortOrder: sortedInfo.columnKey === 'gender' && sortedInfo.order,
       },
       {
-        title: 'Country',
-        dataIndex: 'country',
-        key: 'country',
-        sorter: (a, b) => a.country && a.country.localeCompare(b.country),
-        sortOrder: sortedInfo.columnKey === 'country' && sortedInfo.order,
-      },
-      {
-        title: 'Phone',
-        dataIndex: 'phone',
-        key: 'phone',
-        sorter: (a, b) => a.phone && a.phone.localeCompare(b.phone),
-        sortOrder: sortedInfo.columnKey === 'phone' && sortedInfo.order,
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
+        sorter: (a, b) => a.email && a.email.localeCompare(b.email),
+        sortOrder: sortedInfo.columnKey === 'email' && sortedInfo.order,
       },
       {
         title: 'Seeking',
@@ -124,13 +117,13 @@ class UserTable extends React.Component {
         sortOrder: sortedInfo.columnKey === 'seeking' && sortedInfo.order,
       },
       {
-        title: 'Signup Date',
-        dataIndex: 'createdAt',
-        key: 'createdAt',
-        sorter: (a, b) => a.createdAt && a.createdAt.localeCompare(b.createdAt),
-        sortOrder: sortedInfo.columnKey === 'createdAt' && sortedInfo.order,
+        title: 'Signup date',
+        dataIndex: 'date',
+        key: 'date',
+        sorter: (a, b) => a.date && a.date.localeCompare(b.date),
+        sortOrder: sortedInfo.columnKey === 'date' && sortedInfo.order,
         render: (text, record) => {
-          return moment(record.createdAt).format('ll')
+          return moment(record.date).format('ll')
         }
       },
       {
@@ -140,13 +133,14 @@ class UserTable extends React.Component {
         sorter: (a, b) => a.status && a.status.localeCompare(b.status),
         sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
         render: (text, record) => (
-          <span>
-            <Select defaultValue={record.status} onChange={(value) => this.props.statusUpdate && this.props.statusUpdate(value, record)}>
-              <Option value="active">Active</Option>
-              <Option value="blocked">Block</Option>
-              <Option value="deactivated">Deactive</Option>
-            </Select>
-          </span>
+          record.profile === 'incomplete' ? "Incomplete" :
+            <span>
+              <Select defaultValue={record.status} onChange={(value) => this.props.statusUpdate && this.props.statusUpdate(value, record)}>
+                <Option value="active">Active</Option>
+                <Option value="blocked">Block</Option>
+                <Option value="deactivated">Deactive</Option>
+              </Select>
+            </span>
         )
       },
       {
@@ -165,11 +159,11 @@ class UserTable extends React.Component {
             <span onClick={() => this.props.onEdit && this.props.onEdit(record._id)} className="text-warning cursor-pointer">
               <Icon type="edit" title="Edit" />
             </span>
-            <Divider type="vertical" />
+            {/* <Divider type="vertical" /> */}
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <span onClick={() => this.props.onDelete && this.props.onDelete(record._id)} className="text-danger cursor-pointer">
+            {/* <span onClick={() => this.props.onDelete && this.props.onDelete(record._id)} className="text-danger cursor-pointer">
               <Icon type="delete" title="Delete" />
-            </span>
+            </span> */}
 
           </span>
         )
@@ -217,6 +211,12 @@ class UserTable extends React.Component {
             defaultValue={this.props.filterParams && this.props.filterParams.gender}
             label="Gender"
             labelClass="col-sm-1"
+          />
+          <InputBox
+            className="col-md-6"
+            onChange={this.props.onSearch && this.props.onSearch}
+            field="search"
+            placeholder="Search... name, seeking"
           />
 
           <div className="col-md-2">

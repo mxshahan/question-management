@@ -1,4 +1,5 @@
-import { GET_ALL_USER } from "../../../config";
+import { GET_ALL_USER, FILTER_SEARCH } from "../../../config";
+import UserFilter from "../../components/views/users/UserFilter";
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -6,15 +7,26 @@ export default (state = {}, action) => {
       if (action.payload.status) {
         return state = {
           ...state,
-          [action.payload.status]: action.payload.results
+          [action.payload.status]: {
+            ...state[action.payload.status],
+            results: action.payload.results,
+            filtered: action.payload.results
+          }
         }
       } else {
         return state;
       }
     }
-    // case REQUEST_UPDATE_USER: {
-
-    // }
+    case FILTER_SEARCH: {
+      const filteredData = UserFilter(state[action.payload.status].results, action.payload);
+      return state = {
+        ...state,
+        [action.payload.status]: {
+          ...state[action.payload.status],
+          filtered: filteredData
+        }
+      }
+    }
     default:
       return state
   }

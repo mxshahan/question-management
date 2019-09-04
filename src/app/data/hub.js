@@ -5,10 +5,11 @@ import {
   AddQuestion,
   BulkUpload,
   EditQuestion,
-  UsersActive
+  UsersActive,
+  UsersView,
+  UsersBlocked,
+  UsersDeactivated
 } from "../components/views";
-import UsersBlocked from "../components/views/users/UsersBlocked";
-import UsersDeactivated from "../components/views/users/UsersDeactivated";
 
 export const HubRoot = {
   dashboard: "/",
@@ -45,6 +46,12 @@ export const HubSidebar = [
         label: 'Deactivated Users',
         to: '/deactivated-users',
         component: UsersDeactivated
+      },
+      {
+        label: 'View User',
+        to: '/:id',
+        component: UsersView,
+        isHide: true
       },
     ]
   },

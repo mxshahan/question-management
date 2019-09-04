@@ -4,13 +4,13 @@ module.exports = {
     port: 3005
   },
   db: {
-    host: process.env.DB_HOST,
-    dbname: process.env.DB_NAME,
+    host: 'localhost',
+    dbname: 'sophy-admin',
     debug: false,
     options: {
-      username: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      port: process.env.DB_PORT
+      username: '',
+      password: '',
+      port: 27017
     }
   },
   secret: process.env.SECRET_KEY,

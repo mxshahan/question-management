@@ -4,29 +4,59 @@ import timestamp from 'mongoose-timestamp';
 import { CRUD } from '@util';
 
 const userSchema = new mongoose.Schema({
+  email: {
+    type: String
+  },
   name: {
     type: String
   },
-  gender: {
+  user_fb_id: {
     type: String
+  },
+  gender: {
+    type: String,
+    default: ''
   },
   dob: {
-    type: String
+    type: String,
+    default: ''
   },
   age: {
-    type: String
+    type: String,
+    default: ''
   },
   seeking: {
+    type: String,
+    default: ''
+  },
+  interested: {
+    type: String
+  },
+  work_info: {
+    type: String
+  },
+  college_info: {
+    type: String
+  },
+  fb_account: {
+    type: String
+  },
+  insta_account: {
+    type: String
+  },
+  twitter_account: {
     type: String
   },
   mobile: {
     type: String
   },
   latitude: {
-    type: String
+    type: String,
+    default: '00.000000'
   },
   longitude: {
-    type: String
+    type: String,
+    default: '00.000000'
   },
   images: {
     type: String
@@ -34,7 +64,7 @@ const userSchema = new mongoose.Schema({
   date: {
     type: String
     // type: Date,
-    // default: Date.now 
+    // default: Date.now
   },
   status: {
     type: String,
@@ -42,22 +72,22 @@ const userSchema = new mongoose.Schema({
   },
   profile: {
     type: String,
-    default: 'incompelte'
-  },
-  country: {
-    type: String
-  },
-  countrycode: {
-    type: String,
-    uppercase: true
+    default: 'incomplete'
   },
   delete: {
     type: String,
     default: 0
   },
+  country: {
+    type: String,
+    default: ''
+  },
+  countrycode: {
+    type: String,
+    uppercase: true
+  },
   index: {
-    type: Number,
-    default: 0
+    type: Number
   }
 });
 

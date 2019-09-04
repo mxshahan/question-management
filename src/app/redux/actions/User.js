@@ -1,4 +1,4 @@
-import config, { GET_ALL_USER, REQUEST_UPDATE_USER } from "../../../config";
+import config, { GET_ALL_USER, REQUEST_UPDATE_USER, FILTER_SEARCH } from "../../../config";
 import { api } from "../../../core/api";
 import { serialize } from "../../../core/lib";
 
@@ -59,3 +59,8 @@ export const DeleteMultipleUser = (rowKeys) => {
     })
   }
 }
+
+export const filterData = (payload) => ({
+  type: FILTER_SEARCH,
+  payload
+})

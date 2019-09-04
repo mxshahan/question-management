@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import HubContent from '../../../../core/components';
 import UsersTable from './UsersTable';
-import { GetUserList, UpdateUser, DeleteUser, DeleteMultipleUser } from '../../../redux';
+import { GetUserList, UpdateUser, DeleteUser, DeleteMultipleUser, filterData } from '../../../redux';
 
 class UserManagement extends React.Component {
   constructor(props) {
@@ -11,6 +11,9 @@ class UserManagement extends React.Component {
     this.state = {
       filterParams: {
         status,
+      },
+      searchParams: {
+
       },
       loading: true,
     }
@@ -72,6 +75,10 @@ class UserManagement extends React.Component {
     }
   }
 
+  onSearch = (params) => {
+    this.props.filterData({ ...params, status: this.props.type })
+  }
+
   render() {
     return (
       <HubContent title={this.props.title}>
@@ -83,6 +90,7 @@ class UserManagement extends React.Component {
           data={this.props.data}
           filterParams={this.state.filterParams}
           onFiltering={this.onFiltering}
+          onSearch={this.onSearch}
           statusUpdate={this.statusUpdate}
           deleteMultiple={this.deleteMultiple}
         />
@@ -92,14 +100,16 @@ class UserManagement extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  data: state.users[props.type]
+  data: state.users[props.type] && state.users[props.type].filtered,
+  // filterData: (params) => UserFilter(state.users[props.type], params)
 })
 
 const mapDispatchToProps = (dispatch) => ({
   GetUserList: (params) => dispatch(GetUserList(params)),
   UpdateUser: (payload) => dispatch(UpdateUser(payload)),
   DeleteUser: (id) => dispatch(DeleteUser(id)),
-  DeleteMultipleUser: (rowKeys) => dispatch(DeleteMultipleUser(rowKeys))
+  DeleteMultipleUser: (rowKeys) => dispatch(DeleteMultipleUser(rowKeys)),
+  filterData: (params) => dispatch(filterData(params))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserManagement);
