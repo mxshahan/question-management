@@ -7,6 +7,7 @@ import {
   EditQuestion,
   UsersActive,
   UsersView,
+  EditUsers,
   UsersBlocked,
   UsersDeactivated
 } from "../components/views";
@@ -48,11 +49,17 @@ export const HubSidebar = [
         component: UsersDeactivated
       },
       {
+        label: 'Edit User',
+        to: '/:id',
+        component: EditUsers,
+        isHide: true
+      },
+      {
         label: 'View User',
         to: '/:id',
         component: UsersView,
         isHide: true
-      },
+      }
     ]
   },
   {
