@@ -1,0 +1,47 @@
+.profile{
+  height: 49px;
+  font-size: 20px !important;
+  border: 1px solid #E9E9E9;
+  background-color: #fff;
+  h4{
+    font-size: 20px;
+    padding: 10px;
+    color: #595959;
+  }
+}
+.pro-pass{
+  padding: 10px;
+  background-color: #fff;
+}
+.header{
+  border-bottom: 1px solid #E9E9E9;
+  margin-bottom: 25px;
+  h4{
+  color: #595959;}
+}
+.mb-35{
+  margin-bottom: 35px;
+}
+.name-form{
+  display: flex;
+  justify-content: space-between;
+  .name{
+    width: 223px;
+  }
+}
+.email-form{
+  display: flex;
+  .email{
+    width: 272%
+  }
+}
+
+.picture-upload{
+  display: flex;
+  .picture{
+    width: 272%;
+  }
+}
+.submit {
+  padding: 16px;
+}

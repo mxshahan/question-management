@@ -1,7 +1,7 @@
 import { SignIn, SignUp } from "../components/views/auth";
 import { Dashboard, NotFound } from "../components/views";
 import { HubSidebar } from "../data";
-
+import Admin from '../components/views/admin/AdminProfile';
 let baseUrl = '';
 let HubRoute = []
 
@@ -41,5 +41,6 @@ export const Public = [
 // Public Routes
 export const Private = [
   { path: '/', exact: true, component: Dashboard },
+  { path: '/profile', exact: true, component: Admin},
   ...HubRoute,
 ]

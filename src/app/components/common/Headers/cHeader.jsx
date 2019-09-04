@@ -4,6 +4,7 @@ import { DashContext } from '../../../../core/context';
 import { Loading } from '../../../../core/components/common';
 import { Offline } from "react-detect-offline";
 import { logoutUserData } from '../../../redux';
+import { Link } from 'react-router-dom';
 
 export class Header extends DashContext {
     state = {
@@ -60,8 +61,8 @@ export class Header extends DashContext {
                                     </a>
                                     <div className="dropdown-menu dropdown-menu-right profile-dropdown ">
                                         {/* <!-- item--> */}
-                                        <a className="dropdown-item" href="#void"><i className="mdi mdi-account-circle m-r-5"></i> {this.props.user && this.props.user.username}</a>
-                                        <a className="dropdown-item" href="#void"><i className="mdi mdi-poll m-r-5"></i> Settings</a>
+                                        <a className="dropdown-item" href="#void"><Link to="/profile"><i className="mdi mdi-account-circle m-r-5"></i> {this.props.user && this.props.user.username}</Link></a>
+                                        
                                         <div className="dropdown-divider"></div>
                                         <span className="dropdown-item text-danger cursor-pointer" onClick={this.logoutUser}><i className="mdi mdi-power text-danger"></i>Logout</span>
                                     </div>
