@@ -1,0 +1,45 @@
+.profile-info-box{
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 2px 3px -2px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+}
+.owl-nav{
+  position: relative;
+}
+.owl-prev, .owl-next{
+  position: absolute;
+  top: -250px;
+  opacity: 0 !important;
+  transition: all .3s;
+}
+.owl-prev{
+  left: 0;
+}
+.owl-next{
+  right: 0;
+}
+.owl-prev span, .owl-next span{
+  font-size: 40px;
+  color: black;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+.owl-theme .owl-nav [class*='owl-']:hover {
+  background: transparent !important;
+}
+.owl-dots{
+  display: none;
+}
+.owl-carousel:hover .owl-nav [class*='owl-']{
+  opacity: 1 !important;
+}
+.btn-box{
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+}
+.modal-header{
+  padding: 5px 10px;
+}
