@@ -35,8 +35,7 @@ class UserManagement extends React.Component {
   }
 
   onView = (record) => {
-    console.log(record)
-    history.push('/users/' + record._id)
+    history.push('/users/' + record._id, record)
   }
 
   onDelete = async (id) => {

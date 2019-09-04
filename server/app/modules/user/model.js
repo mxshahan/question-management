@@ -58,9 +58,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: '00.000000'
   },
-  images: {
+  images: [{
     type: String
-  },
+  }],
   date: {
     type: String
     // type: Date,
