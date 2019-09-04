@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import HubContent from '../../../../core/components';
 import UsersTable from './UsersTable';
 import { GetUserList, UpdateUser, DeleteUser, DeleteMultipleUser, filterData } from '../../../redux';
+import { history } from '../../../route/AppRouter';
 
 class UserManagement extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class UserManagement extends React.Component {
 
   onView = (record) => {
     console.log(record)
+    history.push('/users/' + record._id)
   }
 
   onDelete = async (id) => {

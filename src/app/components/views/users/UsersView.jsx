@@ -6,7 +6,7 @@ class UsersView extends React.Component {
   render() {
     return (
       <HubContent>
-        <h1>Hello</h1>
+        <h1>{this.props.match.params.id}</h1>
       </HubContent>
     )
   }
