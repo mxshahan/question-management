@@ -65,7 +65,7 @@ class UserManagement extends React.Component {
 
   statusUpdate = async (value, record) => {
     this.setState({ loading: true })
-    let newData = { status: value, id: record._id }
+    let newData = { status: value, _id: record._id }
     await this.props.UpdateUser(newData);
     this.getUsers();
   }
