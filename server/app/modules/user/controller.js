@@ -80,4 +80,35 @@ export const DeleteMultipe = async (req, res) => {
   } catch (e) {
     res.status(422).json(e);
   }
-}
+};
+
+export const UploadProfileImage = async (req, res) => {
+  // let userBody = JSON.parse(req.body.user);
+  try {
+    user = await userModel.findOne({ _id: req.params.id });
+    if (user) {
+      if (Array.isArray(user.images)) {
+        user.images.push(req.filename);
+      } else {
+        user.images = [req.filename];
+      }
+      await user.save();
+      return res.status(201).json({
+        success: true,
+        message: 'Image uploaded successfully',
+        user
+      });
+    } else {
+      return res.status(201).json({
+        success: false,
+        message: 'User doesn\'t exists'
+      });
+    }
+
+  } catch (e) {
+    return res.status(422).json({
+      success: false,
+      error: e
+    });
+  }
+};

@@ -1,7 +1,8 @@
 import {
-  CreateUser, GetUsers, DeleteUser, UpdateUser, DeleteMultipe
+  CreateUser, GetUsers, DeleteUser, UpdateUser, DeleteMultipe, UploadProfileImage
 } from './controller';
 import { isAuthenticated } from '@mid';
+import { fileUploadMiddlware } from '../../middlewares/file';
 
 export const routers = {
   baseUrl: '/api/user',
@@ -27,6 +28,15 @@ export const routers = {
       handlers: [
         isAuthenticated,
         DeleteMultipe
+      ]
+    },
+    {
+      method: 'POST',
+      route: '/upload-image/:id',
+      handlers: [
+        isAuthenticated,
+        fileUploadMiddlware,
+        UploadProfileImage
       ]
     },
     {

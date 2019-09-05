@@ -1,5 +1,5 @@
 import { GET_ALL_USER, FILTER_SEARCH } from "../../../config";
-import UserFilter from "../../components/views/users/UserFilter";
+import { UserFilter } from "../../components/views/users/UserFn";
 
 export default (state = {}, action) => {
   switch (action.type) {

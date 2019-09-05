@@ -74,6 +74,8 @@ class Input extends React.Component {
             });
           }
           break;
+        case 'file':
+          return this.props.onChange({ [e.target.name]: e.target.files[0] })
         default:
           this.setState({ msg: '' });
           this.props.onChange({ [this.props.field]: value })

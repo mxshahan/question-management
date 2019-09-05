@@ -94,7 +94,36 @@ export const requestSignUpUser = (userData = {}) => {
   }
 }
 
+export const UpdateAdmin = (payload) => {
+  return dispatch => {
+    let url = config.endpoint.admin;
+    return new Promise((resolve, reject) => {
+      api.put(url, payload).then(res => {
+        dispatch(recievedLoginData({ ...res.data, status: res.status }))
+        resolve(res);
+      }, error => {
+        dispatch(failedLoginData(
+          error.response ? Object.assign(error.response.data, { status: error.response.status }) : { status: 500 }
+        ))
+        reject(error);
+      })
+    })
+  }
+}
 
+
+export const ChangePassword = (payload) => {
+  return dispatch => {
+    let url = config.endpoint.change_password;
+    return new Promise((resolve, reject) => {
+      api.put(url, payload).then(res => {
+        resolve(res);
+      }, error => {
+        reject(error);
+      })
+    })
+  }
+}
 
 // Logout User
 export const logoutUserData = () => {

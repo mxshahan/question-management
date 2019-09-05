@@ -13,6 +13,9 @@ export const config = {
     upload_file: 'api/question/upload-file',
     has_user: 'api/admin/has-users',
     get_users: 'api/user',
-    delete_multiple: 'api/user/delete-multiple'
+    delete_multiple: 'api/user/delete-multiple',
+    user_upload_image: 'api/user/upload-image',
+    admin: 'api/admin',
+    change_password: 'api/admin/change-password'
   },
 }

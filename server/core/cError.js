@@ -19,7 +19,7 @@ export default (app) => {
     422: 'Unprocessable entity',
     429: 'Too many requests.',
     500: 'Network Error',
-    501: 'Token Expired or Invalid'
+    501: 'Unknown error'
   };
 
   //Error handler funciton

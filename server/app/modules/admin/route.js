@@ -1,8 +1,9 @@
 import {
-  GetUser, CreateUser, LoginUser, UpdateUser, DeleteUser, CreateAdmin, hasUsers, CreateAdminBySuper
+  GetUser, CreateUser, LoginUser, UpdateUser, DeleteUser, CreateAdmin, hasUsers, CreateAdminBySuper, ChangePassword
 } from './controller';
 import { isAuthenticated } from '../../middlewares';
 import { validateAdmin } from './validate';
+import { fileUploadMiddlware } from '../../middlewares/file';
 // import { isAuthenticated } from '@mid'
 
 export const routers = {
@@ -58,7 +59,16 @@ export const routers = {
       route: '/',
       handlers: [
         isAuthenticated,
+        fileUploadMiddlware,
         UpdateUser
+      ]
+    },
+    {
+      method: 'PUT',
+      route: '/change-password',
+      handlers: [
+        isAuthenticated,
+        ChangePassword
       ]
     },
     {

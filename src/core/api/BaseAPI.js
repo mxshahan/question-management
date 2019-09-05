@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../../config';
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.timeout = 2000;
+axios.defaults.timeout = 5000;
 
 class BaseAPI {
   constructor() {

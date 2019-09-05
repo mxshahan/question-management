@@ -1,4 +1,4 @@
-import { adminCrud } from './model';
+import { adminCrud, adminModel } from './model';
 // import { generateJwt } from '@util'
 let user,
   users;
@@ -99,19 +99,45 @@ export const CreateAdminBySuper = async (req, res, next) => {
 };
 
 export const UpdateUser = async (req, res) => {
+  const userData = JSON.parse(req.body.user);
+  if (req.filename) {
+    await Object.assign(userData, { profileimage: req.filename });
+  }
   try {
-    user = await adminCrud.put({
-      params: {
-        qr: { _id: req.user.uid }
-      },
-      body: req.body
-    });
+    user = await adminModel.findOne({ _id: req.user.uid });
+    Object.assign(user, userData);
+    await user.save();
+
+    res.json(user.toAuthJSON());
   } catch (e) {
     res.status(422).json(e);
-  } finally {
-    res.status(201).json(user.toAuthJSON());
   }
 };
+
+
+export const ChangePassword = async (req, res) => {
+  const userData = req.body;
+  console.log(req.body);
+  try {
+    user = await adminModel.findOne({ _id: req.user.uid });
+    if (user.isMatchedPassword(userData.current)) {
+      user.password = req.body.new;
+      await user.save();
+      return res.status(200).json({
+        success: true,
+        message: 'Password successfully changed'
+      });
+    } else {
+      return res.status(203).json({
+        success: true,
+        message: 'Old password and new password mismatch'
+      });
+    }
+  } catch (e) {
+    res.status(422).json(e);
+  }
+};
+
 
 export const DeleteUser = async (req, res) => {
   try {

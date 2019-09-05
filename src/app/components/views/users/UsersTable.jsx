@@ -4,6 +4,7 @@ import { Card } from 'react-bootstrap';
 import { Table, Divider, Select, Icon } from 'antd';
 import { SelectBox, InputBox } from '../../../../core/components';
 import moment from 'moment';
+import { formatImage } from './UserFn';
 
 const { Option } = Select;
 
@@ -53,8 +54,8 @@ class UserTable extends React.Component {
   }
 
   formatImage = (record) => {
-    return record.images
-      ? record.images
+    return Array.isArray(record.images) && record.images.length > 0
+      ? formatImage(record.images[record.images.length - 1])
       : (
         record.gender.toLowerCase() === 'male'
           ? "/assets/images/male.png"
@@ -156,7 +157,7 @@ class UserTable extends React.Component {
             </span>
             <Divider type="vertical" />
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <span onClick={() => this.props.onEdit && this.props.onEdit(record._id)} className="text-warning cursor-pointer">
+            <span onClick={() => this.props.onEdit && this.props.onEdit(record)} className="text-warning cursor-pointer">
               <Icon type="edit" title="Edit" />
             </span>
             {/* <Divider type="vertical" /> */}
@@ -172,10 +173,10 @@ class UserTable extends React.Component {
 
 
     const { selectedRowKeys } = this.state;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange,
-    };
+    // const rowSelection = {
+    //   selectedRowKeys,
+    //   onChange: this.onSelectChange,
+    // };
 
 
     const rows = [
@@ -235,7 +236,7 @@ class UserTable extends React.Component {
                 dataSource={this.props.data}
                 columns={columns}
                 onChange={this.handleChange}
-                rowSelection={rowSelection}
+                // rowSelection={rowSelection}
                 pagination={{ pageSize: this.state.pageSize }}
                 loading={this.props.loading}
                 rowKey="_id"

@@ -18,21 +18,37 @@ export const GetUserList = (params = {}) => {
   }
 }
 
-// Get Organization List
+// Update User
 export const UpdateUser = (payload) => {
   console.log(payload)
   return async (dispatch) => {
-    let url = config.endpoint.get_users + '/' + payload.id;
+    let url = config.endpoint.get_users + '/' + payload._id;
     return new Promise((resolve, reject) => {
       api.put(url, payload).then((res) => {
         dispatch({ type: REQUEST_UPDATE_USER, payload: res })
-        resolve(res);
+        resolve({ result: res, success: true });
       }).catch(e => {
-        reject(e)
+        resolve({ error: e, success: false });
       })
     })
   }
 }
+
+// Upload Profile Picture
+export const UploadImage = (payload, id) => {
+  return async (dispatch) => {
+    let url = config.endpoint.user_upload_image + '/' + id;
+    return new Promise((resolve, reject) => {
+      api.post(url, payload).then((res) => {
+        dispatch({ type: REQUEST_UPDATE_USER, payload: res })
+        resolve({ result: res.data, success: true });
+      }).catch(e => {
+        resolve({ error: e, success: false });
+      })
+    })
+  }
+}
+
 
 export const DeleteUser = (id) => {
   return () => {

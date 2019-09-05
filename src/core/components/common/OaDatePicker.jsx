@@ -2,68 +2,68 @@ import React from 'react';
 import { DatePicker } from 'antd';
 import moment from 'moment';
 
-const format = 'Do MMM YYYY';
+const format = 'MMM DD, YYYY';
 
 class Input extends React.Component {
-    state = {
-        msg: this.props.errMsg || '',
-        date: this.props.date || new Date()
-    }
+  state = {
+    msg: this.props.errMsg || '',
+    date: this.props.date || new Date()
+  }
 
-    onChange = (date) => {
-        this.setState({ date })
-        this.props.onChange && this.props.onChange({ [this.props.field]: date })
-    }
+  onChange = (date) => {
+    this.setState({ date })
+    this.props.onChange && this.props.onChange({ [this.props.field]: date })
+  }
 
-    componentDidUpdate() {
-        this.props.errMsg && setTimeout(() => {
-            this.setState({
-                msg: this.props.errMsg
-            })
-        }, 300)
-    }
+  componentDidUpdate() {
+    this.props.errMsg && setTimeout(() => {
+      this.setState({
+        msg: this.props.errMsg
+      })
+    }, 300)
+  }
 
-    render() {
-        return (
-            this.props.isPublic ?
-                <>
-                    <label
-                        htmlFor={this.props.field || ''}
-                        className={`${this.props.labelClass || ""}`}
-                    >{this.props.label ? this.props.label : ''} {this.props.isRequired && <span className="text-danger"> * </span>}</label>
-                    <div style={{ position: 'relative' }}>
-                        {this.state.msg && <span className="text-danger text-small" style={{ fontSize: 12, position: 'absolute', right: 20, top: -10, backgroundColor: '#fff', padding: '0px 10px', zIndex: 2 }}>{this.state.msg}</span>}
-
-
-                        {this.props.errMsg && <span className="text-danger text-small" style={{ fontSize: 12, position: 'absolute', right: 20, top: -10, backgroundColor: '#fff', padding: '0px 10px', zIndex: 2 }}>{this.props.errMsg}</span>}
+  render() {
+    return (
+      this.props.isPublic ?
+        <>
+          <label
+            htmlFor={this.props.field || ''}
+            className={`${this.props.labelClass || ""}`}
+          >{this.props.label ? this.props.label : ''} {this.props.isRequired && <span className="text-danger"> * </span>}</label>
+          <div style={{ position: 'relative' }}>
+            {this.state.msg && <span className="text-danger text-small" style={{ fontSize: 12, position: 'absolute', right: 20, top: -10, backgroundColor: '#fff', padding: '0px 10px', zIndex: 2 }}>{this.state.msg}</span>}
 
 
-                        <DatePicker
-                            format={format}
-                            defaultValue={moment(new Date(), format)}
-                            allowClear
-                            size="large"
-                            style={{ width: '100%' }}
-                            id={this.props.field || ''}
-                            disabled={this.props.disabled || false}
-                            onChange={this.onChange}
+            {this.props.errMsg && <span className="text-danger text-small" style={{ fontSize: 12, position: 'absolute', right: 20, top: -10, backgroundColor: '#fff', padding: '0px 10px', zIndex: 2 }}>{this.props.errMsg}</span>}
 
-                        />
-                    </div>
-                </> :
-                <>
-                    <label
-                        htmlFor={this.props.field || ''}
-                        className={`col-sm-2 col-form-label ${this.props.labelClass || ""}`}
-                    >{this.props.label ? this.props.label : ''} {this.props.isRequired && <span className="text-danger"> * </span>}</label>
 
-                    <div className={` ${this.props.className ? this.props.className : 'col-sm-4'}`} style={{ position: 'relative' }}>
+            <DatePicker
+              format={format}
+              defaultValue={moment(new Date(), format)}
+              allowClear
+              size="large"
+              style={{ width: '100%' }}
+              id={this.props.field || ''}
+              disabled={this.props.disabled || false}
+              onChange={this.onChange}
 
-                        {this.state.msg && <span className="text-danger text-small" style={{ fontSize: 12, position: 'absolute', right: 20, top: -10, backgroundColor: '#fff', padding: '0px 10px', zIndex: 2 }}>{this.state.msg}</span>}
+            />
+          </div>
+        </> :
+        <>
+          <label
+            htmlFor={this.props.field || ''}
+            className={`col-sm-2 col-form-label ${this.props.labelClass || ""}`}
+          >{this.props.label ? this.props.label : ''} {this.props.isRequired && <span className="text-danger"> * </span>}</label>
 
-                        {this.props.errMsg && <span className="text-danger text-small" style={{ fontSize: 12, position: 'absolute', right: 20, top: -10, backgroundColor: '#fff', padding: '0px 10px', zIndex: 2 }}>{this.props.errMsg}</span>}
+          <div className={` ${this.props.className ? this.props.className : 'col-sm-4'}`} style={{ position: 'relative' }}>
 
-                        {/* <DatePicker
+            {this.state.msg && <span className="text-danger text-small" style={{ fontSize: 12, position: 'absolute', right: 20, top: -10, backgroundColor: '#fff', padding: '0px 10px', zIndex: 2 }}>{this.state.msg}</span>}
+
+            {this.props.errMsg && <span className="text-danger text-small" style={{ fontSize: 12, position: 'absolute', right: 20, top: -10, backgroundColor: '#fff', padding: '0px 10px', zIndex: 2 }}>{this.props.errMsg}</span>}
+
+            {/* <DatePicker
                             value={this.state.date}
                             onChange={this.onChange}
                             className={`form-control`}
@@ -71,21 +71,21 @@ class Input extends React.Component {
                             disabled={this.props.disabled || false}
 
                         /> */}
-                        <DatePicker
-                            format={this.props.format || format}
-                            defaultValue={this.props.defaultValue}
-                            allowClear
-                            size="large"
-                            style={{ width: '100%' }}
-                            id={this.props.field || ''}
-                            disabled={this.props.disabled || false}
-                            onChange={this.onChange}
+            <DatePicker
+              format={this.props.format || format}
+              defaultValue={this.props.defaultValue}
+              allowClear
+              size="large"
+              style={{ width: '100%' }}
+              id={this.props.field || ''}
+              disabled={this.props.disabled || false}
+              onChange={this.onChange}
 
-                        />
-                    </div>
-                </>
-        )
-    }
+            />
+          </div>
+        </>
+    )
+  }
 }
 
 export const OaDatePicker = Input;

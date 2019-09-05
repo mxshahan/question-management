@@ -38,6 +38,10 @@ class UserManagement extends React.Component {
     history.push('/users/' + record._id, record)
   }
 
+  onEdit = (record) => {
+    history.push('/users/user-edit/' + record._id, record)
+  }
+
   onDelete = async (id) => {
     let action = window.confirm("Do you want to delete?")
     if (action) {
@@ -86,7 +90,7 @@ class UserManagement extends React.Component {
         <UsersTable
           {...this.props}
           onView={this.onView}
-          onDelete={this.onDelete}
+          onEdit={this.onEdit}
           loading={this.state.loading}
           data={this.props.data}
           filterParams={this.state.filterParams}
