@@ -15,6 +15,16 @@ export const GetUsers = async (req, res) => {
   }
 };
 
+export const GetUser = async (req, res) => {
+  try {
+    user = await userModel.findOne({ _id: req.params.id });
+  } catch (error) {
+    res.status(422).json(error);
+  } finally {
+    res.status(200).json(user);
+  }
+};
+
 export const CreateUser = async (req, res) => {
   try {
     user = await userCrud.create(req.body);

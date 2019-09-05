@@ -63,6 +63,21 @@ export const DeleteUser = (id) => {
   }
 }
 
+
+
+export const GetUser = (id) => {
+  return () => {
+    let url = config.endpoint.get_users + '/' + id;
+    return new Promise((resolve, reject) => {
+      api.get(url).then((res) => {
+        resolve(res);
+      }).catch(e => {
+        reject(e)
+      })
+    })
+  }
+}
+
 export const DeleteMultipleUser = (rowKeys) => {
   return () => {
     let url = config.endpoint.delete_multiple;

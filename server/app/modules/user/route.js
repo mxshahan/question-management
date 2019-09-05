@@ -1,5 +1,5 @@
 import {
-  CreateUser, GetUsers, DeleteUser, UpdateUser, DeleteMultipe, UploadProfileImage
+  CreateUser, GetUsers, DeleteUser, UpdateUser, DeleteMultipe, UploadProfileImage, GetUser
 } from './controller';
 import { isAuthenticated } from '@mid';
 import { fileUploadMiddlware } from '../../middlewares/file';
@@ -53,6 +53,13 @@ export const routers = {
       handlers: [
         isAuthenticated,
         UpdateUser
+      ]
+    },
+    {
+      method: 'GET',
+      route: '/:id',
+      handlers: [
+        GetUser
       ]
     },
   ]

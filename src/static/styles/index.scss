@@ -1,3 +1,5 @@
+@import './base/extras';
+
 @import './base/base';
 @import './components/acticles';
 @import './components/basic';
@@ -64,4 +66,10 @@
 
 .owl-carousel{
 
+}
+
+#user-view {
+    .item image{
+        height: auto;
+    }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import HubContent, { InputBox, SelectBox, OaDatePicker } from '../../../../core/components';
+import HubContent, { InputBox, SelectBox, OaDatePicker, Loading } from '../../../../core/components';
 import { Card } from 'react-bootstrap';
 import moment from 'moment';
 import NotFound from '../NotFound';
-import { UpdateUser } from '../../../redux';
+import { UpdateUser, GetUser } from '../../../redux';
 
 class UserEdit extends React.Component {
   state = {
@@ -12,11 +12,15 @@ class UserEdit extends React.Component {
     result: null
   }
 
-  componentDidMount() {
-    const user = this.props.history.location.state;
-    if (user) {
+  async componentDidMount() {
+    let user;
+    try {
+      this.setState({ loading: true })
+      user = await this.props.GetUser(this.props.match.params.id);
       delete user.images;
-      this.setState({ user })
+      this.setState({ loading: false, user })
+    } catch (e) {
+      this.setState({ loading: false })
     }
   }
 
@@ -44,10 +48,13 @@ class UserEdit extends React.Component {
       { name: "Female", id: "female" }
     ]
 
+    if (this.state.loading) {
+      return <Loading type="flat" />
+    }
+
     if (!user) {
       return <NotFound />
     }
-    console.log(this.state.result)
     return (
       <HubContent title="Edit Profile">
         <Card>
@@ -164,7 +171,8 @@ class UserEdit extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  UpdateUser: (payload) => dispatch(UpdateUser(payload))
+  UpdateUser: (payload) => dispatch(UpdateUser(payload)),
+  GetUser: (id) => dispatch(GetUser(id))
 })
 
 export default connect(null, mapDispatchToProps)(UserEdit);

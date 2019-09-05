@@ -9,10 +9,16 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import HubContent, { Loading } from '../../../../core/components';
 import NotFound from '../NotFound';
 import moment from 'moment';
-import { UploadImage } from '../../../redux';
+import { UploadImage, GetUser } from '../../../redux';
 import { formatImage } from './UserFn';
+import Cropper from 'react-cropper'
+import 'cropperjs/dist/cropper.css';
 
 class UsersView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.fileUpload = React.createRef();
+  }
   state = {
     show: false,
     user: null,
@@ -24,47 +30,57 @@ class UsersView extends React.Component {
     this.setState({ file: files[0], imageUrl: URL.createObjectURL(files[0]) })
   }
 
-  componentDidMount() {
-    const user = this.props.history.location.state;
-    if (user) {
-      this.setState({ user })
+  async componentDidMount() {
+    let user;
+    try {
+      this.setState({ loading: true })
+      user = await this.props.GetUser(this.props.match.params.id);
+      this.setState({ loading: false, user })
+    } catch (e) {
+      this.setState({ loading: false })
     }
   }
 
   handleClose = () => {
-    this.setState({ show: false, file: null });
+    this.setState({ show: false, file: null, imageUrl: null });
   }
   handleShow = () => { this.setState({ show: true }); }
 
-  onSubmitHandler = async () => {
-    if (this.state.file) {
-      this.setState({ loading: true })
-      let data = new FormData();
-      data.append('file', this.state.file);
+  onConfirmCrop = (blob) => {
+    console.log(blob)
+  }
 
-      try {
-        const response = await this.props.UploadImage(data, this.state.user._id);
-        console.log(response.result.user)
-        const user = this.props.history.location.state;
-        this.setState((prevState) => {
-          prevState.loading = false;
-          Object.assign(user, response.result.user);
-          Object.assign(prevState.user, response.result.user);
-          prevState.show = false
-          return prevState;
-        })
-        window.location.reload();
-      } catch (e) {
-        this.setState({ loading: false, file: { name: 'Error Occured', size: null } })
+  onSubmitHandler = async () => {
+    const cropper = this.refs.cropper;
+    await cropper.getCroppedCanvas().toBlob(async (blob) => {
+      if (blob) {
+        this.setState({ loading: true })
+        let data = new FormData();
+        data.append('file', blob, blob.name || "No name");
+        try {
+          const response = await this.props.UploadImage(data, this.state.user._id);
+          console.log(response.result.user)
+          const user = this.props.history.location.state;
+          this.setState((prevState) => {
+            prevState.loading = false;
+            Object.assign(user, response.result.user);
+            Object.assign(prevState.user, response.result.user);
+            prevState.show = false
+            prevState.file = null
+            prevState.imageUrl = null
+            return prevState;
+          })
+          // window.location.reload();
+        } catch (e) {
+          this.setState({ loading: false, file: { name: 'Error Occured', size: null } })
+        }
       }
-    }
+    })
   }
 
   showModal = () => {
     return (
-      <Modal show={this.state.show} onHide={this.handleClose}>
-        <Modal.Header closeButton>
-        </Modal.Header>
+      <Modal show={this.state.show} onHide={this.handleClose} centered >
         <div className="col-lg-12">
           <div className="card m-b-30">
             <div className="card-body">
@@ -73,28 +89,36 @@ class UsersView extends React.Component {
               </div>
               <div >
                 {this.state.loading ? <Loading type="flat" /> :
-                  <Dropzone onDrop={this.onDrop}>
-                    {({ getRootProps, getInputProps }) => (
-                      <section className="text-center">
-                        <div {...getRootProps()} style={styles.upload}>
-                          <input {...getInputProps()} />
-                          {!this.state.file && <i style={{ fontSize: 40 }} className="mdi mdi-upload"></i>}
-                          <div>{this.state.file ? (
-                            <React.Fragment>
-                              <div className="w-100">
-                                {this.state.imageUrl && <img className="img-fluid" src={this.state.imageUrl} alt="Profile " />}
-                              </div>
-                              <div className="w-100 mt-2">
-                                <p>{this.state.file.name}</p>
-                                <br />
-                                <p>{(this.state.file.size / 1024).toFixed(2)} KB</p>
-                              </div>
-                            </React.Fragment>
-                          ) : "Drag 'n' drop some files here, or click to select files"}</div>
-                        </div>
-                      </section>
-                    )}
-                  </Dropzone>
+                  this.state.imageUrl ?
+                    <div className="w-100">
+                      <Cropper
+                        src={this.state.imageUrl}
+                        ref='cropper'
+                        aspectRatio={1 / 1}
+                        guides={false}
+                        onCrop={this.onConfirmCrop}
+                      />
+                    </div>
+                    :
+                    <Dropzone onDrop={this.onDrop}>
+                      {({ getRootProps, getInputProps }) => (
+                        <section className="text-center">
+                          <div {...getRootProps()} style={styles.upload}>
+                            <input {...getInputProps()} />
+                            {!this.state.file && <i style={{ fontSize: 40 }} className="mdi mdi-upload"></i>}
+                            <div>{this.state.file ? (
+                              <React.Fragment>
+                                <div className="w-100 mt-2">
+                                  <p>{this.state.file.name}</p>
+                                  <br />
+                                  <p>{(this.state.file.size / 1024).toFixed(2)} KB</p>
+                                </div>
+                              </React.Fragment>
+                            ) : "Drag 'n' drop some files here, or click to select files"}</div>
+                          </div>
+                        </section>
+                      )}
+                    </Dropzone>
                 }
               </div>
               <div className=" mt-4 text-right">
@@ -114,10 +138,15 @@ class UsersView extends React.Component {
 
   render() {
     const user = this.state.user;
+
+    if (this.state.loading) {
+      return <Loading type="flat" />
+    }
+
     if (!user) {
       return <NotFound />
     }
-    console.log(user.images.length)
+
     let owl_items = [];
 
     user.images.map((item, index) => (
@@ -133,12 +162,12 @@ class UsersView extends React.Component {
     ))
 
     return (
-      <HubContent>
+      <HubContent id="user-view">
         {this.showModal()}
         <div className="row">
           <div className="col-md-4">
-            <div className="card d-flex align-items-center " style={{ height: 200, overflow: 'hidden' }}>
-              {user.images.length &&
+            <div className="card d-flex align-items-center ">
+              {owl_items.length ?
                 <OwlCarousel
                   items={1}
                   className="owl-theme"
@@ -151,7 +180,7 @@ class UsersView extends React.Component {
                 >
                   {owl_items.reverse()}
                 </OwlCarousel>
-              }
+                : <span className="p-2">No profile picture uploaded...</span>}
             </div>
           </div>
           <div className="col-md-8">
@@ -200,7 +229,8 @@ const styles = {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  UploadImage: (data, id) => dispatch(UploadImage(data, id))
+  UploadImage: (data, id) => dispatch(UploadImage(data, id)),
+  GetUser: (id) => dispatch(GetUser(id))
 })
 
 export default connect(null, mapDispatchToProps)(UsersView);
