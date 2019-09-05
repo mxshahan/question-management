@@ -71,6 +71,7 @@
     "react-metismenu": "^1.4.0",
     "react-metismenu-router-link": "^2.1.0",
     "react-number-format": "^4.0.7",
+    "react-owl-carousel": "^2.3.1",
     "react-paginate": "^6.3.0",
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",
