@@ -88,7 +88,8 @@ class UsersView extends React.Component {
             <div className="profile-info-box">
               <Link
                 className="btn btn-primary btn-md waves-effect waves-light float-right"
-                to="/"
+                to="#"
+                onClick={()=>{this.props.history.push('/edit-user/'+user._id, user)}}
               >Edit Profile</Link>
               <p class="text-capitalize"><strong className="mr-2">Name:</strong> {user.name}</p>
               <p class="text-capitalize"><strong className="mr-2">Age:</strong> {user.age}</p>
